@@ -2,7 +2,13 @@ import http from 'k6/http';
 import { sleep, check } from 'k6';
 
 export const options = {
-  iterations: 1,
+  iterations: 20,
+  thresholds: {
+    http_req_duration: ['p(90)<10', 'max<1'],
+
+    //a quantidade de requisições que falharam tem que ser de até 1%
+     http_req_failed: ['rate<0.01']
+  }
 };
 
 export default function () {
@@ -25,5 +31,4 @@ export default function () {
     'Validar que o token é string': (res) => typeof(res.json().token) == 'string'
   })
   sleep(1);
-  console.log(response);
 }
