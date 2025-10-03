@@ -1,8 +1,8 @@
 import http from 'k6/http';
 import { sleep } from 'k6';
-import { expect } from "https://jslib.k6.io/k6-testing/0.5.0/index.js";
 import { obterToken } from '../helpers/autenticacao.js';
 import { check } from 'k6';
+import { obterBaseUrl } from '../utils/variaveis.js';
 
 export const options = {
   iterations: 1
@@ -11,7 +11,7 @@ export const options = {
 export default function() {
   const token = obterToken();
 
-  const url = 'http://localhost:3000/transferencias';
+  const url = obterBaseUrl() + '/transferencias';
 
   const payload = JSON.stringify({
 

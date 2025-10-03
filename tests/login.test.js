@@ -1,5 +1,6 @@
 import http from 'k6/http';
 import { sleep, check } from 'k6';
+import { obterBaseUrl } from '../utils/variaveis.js';
 
 //obter o conteudo do arquivo postLogin e convertendo para Json
 const postLogin = JSON.parse(open('../fixtures/postLogin.json')); 
@@ -7,9 +8,9 @@ const postLogin = JSON.parse(open('../fixtures/postLogin.json'));
 export const options = {
   
   stages:[
+    { duration:'5s', target: 5},
     { duration:'10s', target: 10},
-    { duration:'20s', target: 20},
-    { duration:'10s', target: 0},
+    { duration:'5s', target: 0},
   ],
 
   thresholds: {
@@ -21,10 +22,10 @@ export const options = {
 };
 
 export default function () {
-    const url = 'http://localhost:3000/login';
+    const url = obterBaseUrl() + '/login';
 
     //é possivel manipular os dados caso necessario
-    postLogin.username = "junior.souza"
+    //postLogin.username = "junior.souza"
 
     // se quiser passar as informaçoes diretamente (não recomendado)    
     // const payload = JSON.stringify({
